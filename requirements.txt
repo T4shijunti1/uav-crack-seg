@@ -1,0 +1,48 @@
+# ============================================================
+# UAV-Crack-Seg 运行依赖（与实际训练/测试环境一致）
+# 已验证环境：Windows 11；Python 3.11；CUDA 12.8；
+#             RTX 50 系（Blackwell sm_120，如 RTX 5070 Laptop）
+# ============================================================
+#
+# 推荐安装步骤：
+#   1) conda create -n uav_crack python=3.11 -y
+#      conda activate uav_crack
+#   2) 安装与 CUDA 匹配的 PyTorch（以 CUDA 12.8 为例；其他 CUDA 版本请
+#      到 https://pytorch.org/get-started/locally/ 选择对应索引）：
+#        pip install torch==2.11.0 torchvision==0.26.0 ^
+#            --index-url https://download.pytorch.org/whl/cu128
+#   3) 安装其余依赖：
+#        pip install -r requirements.txt
+#
+# 说明：本项目使用【纯 Python】的 mmcv-lite（无需编译 C++/CUDA 算子）。
+#       完整版 mmcv 缺失的 mmcv._ext 由本仓库
+#       crackseg/utils/ops_shim.py 在各运行入口（tools/、scripts/）自动注入
+#       轻量桩，因此无需本机具备 CUDA 编译环境，也不要改装完整版 mmcv。
+# ------------------------------------------------------------
+
+# ---- 深度学习框架（建议先按上面第 2 步从 cu128 索引安装）----
+torch==2.11.0
+torchvision==0.26.0
+
+# ---- OpenMMLab：mmcv 使用纯 Python 的 mmcv-lite ----
+mmengine==0.10.7
+mmcv-lite==2.1.0
+mmsegmentation==1.2.2
+
+# ---- 数值计算与图像处理 ----
+numpy==2.4.6
+scipy==1.17.1
+opencv-python==5.0.0.93
+pillow==12.3.0
+matplotlib==3.11.2
+timm==1.0.29
+prettytable==3.18.0
+tqdm==4.70.1
+PyYAML==6.0.3
+addict==2.4.0
+yapf==0.43.0
+ftfy==6.3.1
+
+# ---- ONNX 导出与校验（仅在导出 / 校验 ONNX 时需要）----
+onnx>=1.14
+onnxruntime>=1.16
